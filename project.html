@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>О проекте ArtPhone — portfolio e-commerce case</title>
+    <meta name="description" content="ArtPhone как portfolio case: статический e-commerce проект Apple-техники с современным UI, каталогом, корзиной, поиском и адаптивностью.">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="header">
+        <nav class="main-nav" aria-label="Основная навигация">
+            <div class="nav-container">
+                <a href="index.html" class="logo">ArtPhone</a>
+                <button class="burger-menu" id="burgerMenu" aria-label="Открыть меню" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="categories.html">Каталог</a></li>
+                    <li><a href="catalog-iphone.html">iPhone</a></li>
+                    <li><a href="catalog-mac.html">Mac</a></li>
+                    <li><a href="contacts.html">Контакты</a></li>
+                    <li><a href="project.html" class="active">О проекте</a></li>
+                    <li><a href="login.html" id="loginLink">Вход</a></li>
+                    <li><a href="profile.html" id="profileLink" style="display: none;">Личный кабинет</a></li>
+                </ul>
+                <div class="search-container">
+                    <input type="text" id="searchInput" class="search-input" placeholder="Найти iPhone, Mac, AirPods..." aria-label="Поиск по каталогу">
+                    <div id="searchResults" class="search-results"></div>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <main class="project-page">
+        <section class="premium-hero project-hero">
+            <div class="container hero-shell">
+                <div class="hero-content">
+                    <span class="eyebrow">Portfolio case</span>
+                    <h1>ArtPhone как демонстрационный e-commerce проект</h1>
+                    <p>Проект показывает, как учебный HTML/CSS/JavaScript магазин можно превратить в аккуратную коммерческую витрину Apple-техники без переписывания на React.</p>
+                    <div class="hero-actions">
+                        <a href="index.html" class="btn btn-primary">Смотреть главную</a>
+                        <a href="categories.html" class="btn btn-outline">Открыть каталог</a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="device-stage">
+                        <img class="hero-phone" src="img/iphone-17-pro.png" alt="iPhone 17 Pro">
+                        <img class="hero-mac" src="img/MacBook-Air-M4.png" alt="MacBook Air M4">
+                        <img class="hero-watch" src="img/airpods-pro-3.png" alt="AirPods Pro 3">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="premium-section">
+            <div class="container project-grid">
+                <article class="project-panel">
+                    <span class="eyebrow">Features</span>
+                    <h2>Что реализовано</h2>
+                    <ul>
+                        <li>Главная страница с hero, преимуществами, популярными товарами, категориями и промо-блоками.</li>
+                        <li>Sticky glass-header, поиск с подсказками, мобильное меню и корзина.</li>
+                        <li>Современные карточки товаров с бейджами, рейтингом, избранным, CTA и быстрым просмотром.</li>
+                        <li>Гостевая корзина, toast-уведомления, scroll reveal и анимация добавления в корзину.</li>
+                    </ul>
+                </article>
+                <article class="project-panel">
+                    <span class="eyebrow">Stack</span>
+                    <h2>Технологии</h2>
+                    <ul>
+                        <li>HTML5 semantic layout.</li>
+                        <li>CSS3, CSS variables, responsive grid, glass/blur effects.</li>
+                        <li>Vanilla JavaScript, localStorage, DOM events, IntersectionObserver.</li>
+                        <li>Static multi-page architecture без сборщика и фреймворка.</li>
+                    </ul>
+                </article>
+                <article class="project-panel">
+                    <span class="eyebrow">UX/UI</span>
+                    <h2>Дизайн-решения</h2>
+                    <ul>
+                        <li>Apple-like premium: светлый фон, воздух, крупные изображения, мягкие тени.</li>
+                        <li>Marketplace-механики: hit/new/sale бейджи, старая цена, рейтинг, быстрые действия.</li>
+                        <li>Mobile-first ограничения для сеток, кнопок, карточек и навигации.</li>
+                        <li>Понятные CTA и коммерческие блоки для trade-in, рассрочки и доставки.</li>
+                    </ul>
+                </article>
+                <article class="project-panel">
+                    <span class="eyebrow">Value</span>
+                    <h2>Что демонстрирует case</h2>
+                    <ul>
+                        <li>Умение улучшать существующий проект без полного переписывания.</li>
+                        <li>Работу с визуальной системой, адаптивом и микроинтеракциями.</li>
+                        <li>Понимание коммерческого e-commerce UX и пути пользователя к покупке.</li>
+                        <li>Аккуратную фронтенд-разработку на чистом HTML/CSS/JavaScript.</li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+
+        <section class="premium-section project-outcome-section">
+            <div class="container project-outcome">
+                <span class="eyebrow">Business value</span>
+                <h2>Почему этот проект полезен бизнесу</h2>
+                <p>ArtPhone демонстрирует, как frontend-разработчик мыслит не только блоками и стилями, но и коммерческим сценарием: первое впечатление, доверие, выбор товара, сравнение, корзина и оформление заказа работают как единая воронка.</p>
+                <div class="project-links">
+                    <a class="btn btn-primary" href="index.html">Открыть витрину</a>
+                    <a class="btn btn-outline" href="#">GitHub placeholder</a>
+                    <a class="btn btn-outline" href="#">Live Demo placeholder</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <h3>ArtPhone</h3>
+                    <p>Portfolio e-commerce case для Apple-техники.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Меню</h4>
+                    <ul>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="categories.html">Каталог</a></li>
+                        <li><a href="contacts.html">Контакты</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Ссылки</h4>
+                    <p>GitHub: добавьте ссылку после публикации</p>
+                    <p>Live Demo: добавьте ссылку после деплоя</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 ArtPhone. Portfolio e-commerce case.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
