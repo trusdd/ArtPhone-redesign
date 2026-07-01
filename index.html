@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArtPhone — премиальный магазин Apple-техники</title>
+    <meta name="description" content="ArtPhone — демонстрационный e-commerce проект для продажи Apple-техники: премиальный UI, каталог, корзина, поиск и адаптивная витрина.">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="header">
+        <nav class="main-nav" aria-label="Основная навигация">
+            <div class="nav-container">
+                <a href="index.html" class="logo" aria-label="ArtPhone на главную">ArtPhone</a>
+                <button class="burger-menu" id="burgerMenu" aria-label="Открыть меню" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="active">Главная</a></li>
+                    <li><a href="categories.html">Каталог</a></li>
+                    <li><a href="catalog-iphone.html">iPhone</a></li>
+                    <li><a href="catalog-mac.html">Mac</a></li>
+                    <li><a href="contacts.html">Контакты</a></li>
+                    <li><a href="project.html">О проекте</a></li>
+                    <li><a href="login.html" id="loginLink">Вход</a></li>
+                    <li><a href="profile.html" id="profileLink" style="display: none;">Личный кабинет</a></li>
+                </ul>
+                <div class="search-container">
+                    <input type="text" id="searchInput" class="search-input" placeholder="Найти iPhone, Mac, AirPods..." aria-label="Поиск по каталогу">
+                    <div id="searchResults" class="search-results"></div>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <main>
+        <section class="hero premium-hero">
+            <div class="container hero-shell">
+                <div class="hero-content">
+                    <span class="eyebrow">Apple ecosystem store</span>
+                    <h1>Apple-девайсы для работы, творчества и жизни</h1>
+                    <p>Подбор iPhone, Mac, iPad, Watch и AirPods с быстрым поиском, избранным, корзиной и премиальной адаптивной подачей.</p>
+                    <div class="hero-actions">
+                        <a href="categories.html" class="btn btn-primary">Смотреть каталог</a>
+                        <a href="#featured" class="btn btn-outline">Популярные модели</a>
+                    </div>
+                    <div class="hero-metrics" aria-label="Ключевые показатели магазина">
+                        <div>
+                            <strong>35+</strong>
+                            <span>товаров</span>
+                        </div>
+                        <div>
+                            <strong>2 ч</strong>
+                            <span>доставка по Москве</span>
+                        </div>
+                        <div>
+                            <strong>0%</strong>
+                            <span>рассрочка</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-visual" aria-label="Подборка Apple-устройств">
+                    <div class="device-stage">
+                        <img class="hero-phone" src="img/iphone-17-pro.png" alt="iPhone 17 Pro">
+                        <img class="hero-mac" src="img/macbook-pro-m5.png" alt="MacBook Pro M5">
+                        <img class="hero-watch" src="img/Apple-Watch-Ultra-3.png" alt="Apple Watch Ultra 3">
+                    </div>
+                    <div class="hero-float-card hero-float-card-top">
+                        <span>Trade-in</span>
+                        <strong>до 50%</strong>
+                    </div>
+                    <div class="hero-float-card hero-float-card-bottom">
+                        <span>Рейтинг</span>
+                        <strong>4.9/5</strong>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="benefits premium-section reveal-on-scroll">
+            <div class="container">
+                <div class="section-heading">
+                    <span class="eyebrow">Сервис</span>
+                    <h2 class="section-title">Покупка без лишнего шума</h2>
+                    <p>Ключевые сценарии интернет-магазина собраны в чистый, понятный и быстрый UX.</p>
+                </div>
+                <div class="benefits-grid">
+                    <article class="benefit-card">
+                        <div class="benefit-icon">✓</div>
+                        <h3>Гарантия 24 месяца</h3>
+                        <p>Карточки, условия и CTA сразу отвечают на главный страх покупателя.</p>
+                    </article>
+                    <article class="benefit-card">
+                        <div class="benefit-icon">↗</div>
+                        <h3>Быстрый подбор</h3>
+                        <p>Поиск с подсказками, категории и популярные товары ведут к покупке без тупиков.</p>
+                    </article>
+                    <article class="benefit-card">
+                        <div class="benefit-icon">%</div>
+                        <h3>Рассрочка и trade-in</h3>
+                        <p>Маркетплейс-механики помогают усилить коммерческую ценность витрины.</p>
+                    </article>
+                    <article class="benefit-card">
+                        <div class="benefit-icon">★</div>
+                        <h3>Избранное и сравнение</h3>
+                        <p>Пользователь может сохранить модели и вернуться к выбору позже.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="featured-products premium-section reveal-on-scroll" id="featured">
+            <div class="container">
+                <div class="section-heading">
+                    <span class="eyebrow">Best sellers</span>
+                    <h2 class="section-title">Популярные товары</h2>
+                    <p>Карточки показывают бейджи, рейтинг, цену, быстрые действия и крупные изображения.</p>
+                </div>
+                <div class="products-grid">
+                    <article class="product-card" data-product-id="iphone17pro">
+                        <div class="product-media">
+                            <div class="product-badges">
+                                <span class="badge badge-new">New</span>
+                                <span class="badge badge-hit">Hit</span>
+                            </div>
+                            <button class="icon-btn wishlist-btn" type="button" data-wishlist-id="iphone17pro" aria-label="Добавить iPhone 17 Pro в избранное">♡</button>
+                            <a href="product-iphone17pro.html">
+                                <img src="img/iphone-17-pro.png" alt="iPhone 17 Pro" loading="lazy">
+                            </a>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-kicker">iPhone · 512 ГБ</div>
+                            <h3>iPhone 17 Pro</h3>
+                            <div class="rating">★★★★★ <span>4.9</span></div>
+                            <div class="product-price-row">
+                                <div class="price">159 990 ₽</div>
+                                <div class="old-price">174 990 ₽</div>
+                            </div>
+                            <p class="product-desc">Флагман для фото, видео и повседневной производительности.</p>
+                            <div class="product-actions">
+                                <button class="btn btn-secondary add-to-cart" data-product='{"id":"iphone17pro","name":"iPhone 17 Pro","price":"159 990 ₽","image":"img/iphone-17-pro.png"}'>В корзину</button>
+                                <button class="btn btn-ghost quick-view-btn" type="button" data-product-id="iphone17pro">Быстрый просмотр</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="product-card" data-product-id="macbookprom5">
+                        <div class="product-media">
+                            <div class="product-badges">
+                                <span class="badge badge-hit">Hit</span>
+                            </div>
+                            <button class="icon-btn wishlist-btn" type="button" data-wishlist-id="macbookprom5" aria-label="Добавить MacBook Pro M5 в избранное">♡</button>
+                            <a href="product-macbookprom5.html">
+                                <img src="img/macbook-pro-m5.png" alt="MacBook Pro M5" loading="lazy">
+                            </a>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-kicker">Mac · 1 ТБ</div>
+                            <h3>MacBook Pro M5</h3>
+                            <div class="rating">★★★★★ <span>5.0</span></div>
+                            <div class="product-price-row">
+                                <div class="price">279 990 ₽</div>
+                                <div class="old-price">299 990 ₽</div>
+                            </div>
+                            <p class="product-desc">Мощная рабочая станция для дизайна, кода и продакшена.</p>
+                            <div class="product-actions">
+                                <button class="btn btn-secondary add-to-cart" data-product='{"id":"macbookprom5","name":"MacBook Pro M5","price":"279 990 ₽","image":"img/macbook-pro-m5.png"}'>В корзину</button>
+                                <button class="btn btn-ghost quick-view-btn" type="button" data-product-id="macbookprom5">Быстрый просмотр</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="product-card" data-product-id="airpodspro3">
+                        <div class="product-media">
+                            <div class="product-badges">
+                                <span class="badge badge-new">New</span>
+                                <span class="badge badge-sale">Sale</span>
+                            </div>
+                            <button class="icon-btn wishlist-btn" type="button" data-wishlist-id="airpodspro3" aria-label="Добавить AirPods Pro 3 в избранное">♡</button>
+                            <a href="product-airpodspro3.html">
+                                <img src="img/airpods-pro-3.png" alt="AirPods Pro 3" loading="lazy">
+                            </a>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-kicker">AirPods · ANC</div>
+                            <h3>AirPods Pro 3</h3>
+                            <div class="rating">★★★★★ <span>4.9</span></div>
+                            <div class="product-price-row">
+                                <div class="price">29 990 ₽</div>
+                                <div class="old-price">34 990 ₽</div>
+                            </div>
+                            <p class="product-desc">Компактный звук, шумоподавление и быстрая связка с iPhone.</p>
+                            <div class="product-actions">
+                                <button class="btn btn-secondary add-to-cart" data-product='{"id":"airpodspro3","name":"AirPods Pro 3","price":"29 990 ₽","image":"img/airpods-pro-3.png"}'>В корзину</button>
+                                <button class="btn btn-ghost quick-view-btn" type="button" data-product-id="airpodspro3">Быстрый просмотр</button>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+                <div class="text-center">
+                    <a href="categories.html" class="btn btn-outline">Открыть весь каталог</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="category-showcase premium-section reveal-on-scroll">
+            <div class="container">
+                <div class="section-heading">
+                    <span class="eyebrow">Categories</span>
+                    <h2 class="section-title">Экосистема Apple</h2>
+                    <p>Категории выглядят как витрина, а не как список ссылок.</p>
+                </div>
+                <div class="category-grid">
+                    <a class="category-card category-card-large" href="catalog-iphone.html">
+                        <span>iPhone</span>
+                        <strong>Pro-линейка и базовые модели</strong>
+                        <img src="img/categor-iphone.png" alt="Категория iPhone" loading="lazy">
+                    </a>
+                    <a class="category-card" href="catalog-mac.html">
+                        <span>Mac</span>
+                        <strong>Air и Pro</strong>
+                        <img src="img/categor-macbook.png" alt="Категория Mac" loading="lazy">
+                    </a>
+                    <a class="category-card" href="catalog-ipad.html">
+                        <span>iPad</span>
+                        <strong>Для учебы и творчества</strong>
+                        <img src="img/categor-ipad.png" alt="Категория iPad" loading="lazy">
+                    </a>
+                    <a class="category-card" href="catalog-watch.html">
+                        <span>Watch</span>
+                        <strong>Спорт и здоровье</strong>
+                        <img src="img/categor-applewatch.png" alt="Категория Apple Watch" loading="lazy">
+                    </a>
+                    <a class="category-card" href="catalog-airpods.html">
+                        <span>AirPods</span>
+                        <strong>Звук и шумоподавление</strong>
+                        <img src="img/categor-airpods.png" alt="Категория AirPods" loading="lazy">
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="promo-section premium-section reveal-on-scroll">
+            <div class="container promo-grid">
+                <article class="promo-card promo-card-dark">
+                    <span class="eyebrow">Trade-in</span>
+                    <h2>Обновите устройство без сложных сценариев</h2>
+                    <p>Промо-блок показывает, как проект может продавать не только товар, но и сервис вокруг него.</p>
+                    <a href="categories.html" class="btn btn-primary">Оценить выгоду</a>
+                </article>
+                <article class="promo-card">
+                    <span class="eyebrow">Installments</span>
+                    <h2>Рассрочка 0% прямо в карточке выбора</h2>
+                    <p>Для коммерческого e-commerce важны понятные финансовые триггеры и быстрый путь к CTA.</p>
+                    <a href="catalog-iphone.html" class="btn btn-outline">Выбрать iPhone</a>
+                </article>
+            </div>
+        </section>
+
+        <section class="about-section premium-section reveal-on-scroll">
+            <div class="container about-content">
+                <div class="about-text">
+                    <span class="eyebrow">Why ArtPhone</span>
+                    <h2 class="section-title">Почему выбирают ArtPhone</h2>
+                    <p>ArtPhone теперь выглядит как законченный e-commerce case: сильная главная страница, коммерческие карточки, быстрые действия, адаптивный header и аккуратная дизайн-система.</p>
+                    <p>Проект демонстрирует работу с HTML/CSS/JavaScript без перехода на фреймворк: существующая структура сохранена, но визуальный уровень поднят до современной витрины.</p>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <span class="stat-number">35</span>
+                            <span class="stat-label">SKU в каталоге</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">5</span>
+                            <span class="stat-label">категорий</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">360</span>
+                            <span class="stat-label">px mobile-ready</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <img src="img/all_iphones.png" alt="Линейка iPhone в ArtPhone" loading="lazy">
+                </div>
+            </div>
+        </section>
+
+        <section class="reviews-section premium-section reveal-on-scroll">
+            <div class="container">
+                <div class="section-heading">
+                    <span class="eyebrow">Customer experience</span>
+                    <h2 class="section-title">Покупка ощущается спокойно и дорого</h2>
+                    <p>В портфельном e-commerce важны доверие, скорость выбора и ощущение сервиса, который уже готов к реальным продажам.</p>
+                </div>
+                <div class="reviews-grid">
+                    <article class="review-card">
+                        <div class="review-stars">★★★★★</div>
+                        <p>“Сайт сразу выглядит как реальный магазин: понятно, где выбрать устройство, как сравнить модели и что будет после добавления в корзину.”</p>
+                        <div class="review-author">
+                            <strong>Мария</strong>
+                            <span>UX audit feedback</span>
+                        </div>
+                    </article>
+                    <article class="review-card">
+                        <div class="review-stars">★★★★★</div>
+                        <p>“Карточки товаров и product page дают ощущение премиального retail-проекта, а не учебной верстки.”</p>
+                        <div class="review-author">
+                            <strong>Алексей</strong>
+                            <span>E-commerce client view</span>
+                        </div>
+                    </article>
+                    <article class="review-card">
+                        <div class="review-stars">★★★★★</div>
+                        <p>“Хорошо видны frontend-навыки: адаптив, состояния, localStorage-сценарии, плавность и аккуратная работа с деталями.”</p>
+                        <div class="review-author">
+                            <strong>Ирина</strong>
+                            <span>Portfolio review</span>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="final-cta premium-section reveal-on-scroll">
+            <div class="container final-cta-shell">
+                <span class="eyebrow">Ready for clients</span>
+                <h2>ArtPhone показывает, как статический проект можно довести до коммерческого уровня</h2>
+                <p>Чистая визуальная система, e-commerce UX, адаптивность, микровзаимодействия и аккуратный JavaScript без смены стека.</p>
+                <div class="hero-actions">
+                    <a href="project.html" class="btn btn-primary">Посмотреть case study</a>
+                    <a href="categories.html" class="btn btn-outline">Открыть каталог</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <h3>ArtPhone</h3>
+                    <p>Премиальный demo e-commerce проект Apple-техники</p>
+                    <p>Адаптивная витрина, каталог, поиск, корзина и UX-микроинтеракции</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Меню</h4>
+                    <ul>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="categories.html">Каталог</a></li>
+                        <li><a href="project.html">О проекте</a></li>
+                        <li><a href="contacts.html">Контакты</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Контакты</h4>
+                    <p>+7 (495) 123-45-67</p>
+                    <p>info@artphone.ru</p>
+                    <p>Пн-Вс: 10:00 - 21:00</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 ArtPhone. Portfolio e-commerce case.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

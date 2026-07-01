@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оформление заказа — ArtPhone</title>
+    <meta name="description" content="Оформление заказа ArtPhone: контактные данные, доставка, оплата и итоговая корзина.">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="header">
+        <nav class="main-nav" aria-label="Основная навигация">
+            <div class="nav-container">
+                <a href="index.html" class="logo">ArtPhone</a>
+                <button class="burger-menu" id="burgerMenu" aria-label="Открыть меню" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="categories.html">Каталог</a></li>
+                    <li><a href="contacts.html">Контакты</a></li>
+                    <li><a href="project.html">О проекте</a></li>
+                    <li><a href="login.html" id="loginLink">Вход</a></li>
+                    <li><a href="profile.html" id="profileLink" style="display: none;">Личный кабинет</a></li>
+                </ul>
+                <div class="search-container">
+                    <input type="text" id="searchInput" class="search-input" placeholder="Найти iPhone, Mac, AirPods..." aria-label="Поиск по каталогу">
+                    <div id="searchResults" class="search-results"></div>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <main class="checkout-container">
+        <div class="checkout-hero">
+            <span class="eyebrow">Checkout</span>
+            <h1>Оформление заказа</h1>
+            <p>Минимум шагов: контакты, доставка, оплата и прозрачный итог по корзине.</p>
+        </div>
+
+        <div class="checkout-content">
+            <section class="checkout-form">
+                <h2>Контактные данные</h2>
+                <form id="checkoutForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="recipientName">Имя получателя</label>
+                            <input type="text" id="recipientName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="recipientPhone">Телефон</label>
+                            <input type="tel" id="recipientPhone" required>
+                        </div>
+                    </div>
+
+                    <h2>Адрес доставки</h2>
+                    <div class="form-group">
+                        <label for="city">Город</label>
+                        <input type="text" id="city" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="street">Улица</label>
+                            <input type="text" id="street" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="house">Дом</label>
+                            <input type="text" id="house" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="apartment">Квартира</label>
+                            <input type="text" id="apartment">
+                        </div>
+                        <div class="form-group">
+                            <label for="zipcode">Индекс</label>
+                            <input type="text" id="zipcode">
+                        </div>
+                    </div>
+
+                    <h2>Способ оплаты</h2>
+                    <div class="payment-options">
+                        <label class="payment-option">
+                            <input type="radio" name="payment" value="card" checked>
+                            <span>Банковской картой онлайн</span>
+                        </label>
+                        <label class="payment-option">
+                            <input type="radio" name="payment" value="cash">
+                            <span>Наличными при получении</span>
+                        </label>
+                        <label class="payment-option">
+                            <input type="radio" name="payment" value="installments">
+                            <span>Рассрочка 0%</span>
+                        </label>
+                    </div>
+                </form>
+            </section>
+
+            <aside class="order-summary">
+                <h3>Ваш заказ</h3>
+                <div id="checkoutItems" class="checkout-items"></div>
+                <div class="summary-row">
+                    <span>Товары:</span>
+                    <span id="checkoutTotalItems">0</span>
+                </div>
+                <div class="summary-row">
+                    <span>Доставка:</span>
+                    <span>Бесплатно</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Итого:</span>
+                    <span id="checkoutTotalSum">0 ₽</span>
+                </div>
+                <button class="btn btn-primary" id="placeOrderBtn">Подтвердить заказ</button>
+                <a href="cart.html" class="btn btn-outline">Вернуться в корзину</a>
+            </aside>
+        </div>
+    </main>
+
+    <div class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <h3>ArtPhone</h3>
+                    <p>Премиальный demo e-commerce проект Apple-техники</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Меню</h4>
+                    <ul>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="categories.html">Каталог</a></li>
+                        <li><a href="project.html">О проекте</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Контакты</h4>
+                    <p>+7 (495) 123-45-67</p>
+                    <p>info@artphone.ru</p>
+                    <p>Пн-Вс: 10:00 - 21:00</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 ArtPhone. Portfolio e-commerce case.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
