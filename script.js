@@ -1958,3 +1958,258 @@ style.textContent = `
     body.menu-open { overflow: hidden; }
 `;
 document.head.appendChild(style);
+
+/* --------------------------------------------------------------------------
+   Production hardening layer
+   - normalizes inconsistent legacy markup
+   - removes mobile UX edge cases
+   - makes cart rendering safe and event-driven
+   -------------------------------------------------------------------------- */
+(function () {
+  'use strict';
+
+  const moneyToNumber = (value) => Number(String(value || '').replace(/\D/g, '')) || 0;
+  const formatMoney = (value) => `${moneyToNumber(value).toLocaleString('ru-RU')} ₽`;
+  const escapeHtml = (value) => String(value ?? '').replace(/[&<>'"]/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    "'": '&#39;',
+    '"': '&quot;',
+  }[char]));
+
+  const normalizeProduct = (product) => {
+    const catalogProduct = window.catalogProducts?.find((item) => item.id === product?.id);
+    const source = { ...catalogProduct, ...product };
+
+    return {
+      id: String(source.id || source.product_id || (typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : Date.now())),
+      name: String(source.name || source.product_name || 'Apple product'),
+      price: String(source.price || source.product_price || '0 ₽'),
+      image: String(catalogProduct?.image || source.image || source.product_image || 'favicon.svg'),
+    };
+  };
+
+  function normalizeHeader() {
+    const nav = document.querySelector('.main-nav');
+    const navContainer = document.querySelector('.nav-container');
+    const logo = document.querySelector('.logo');
+    const burger = document.getElementById('burgerMenu');
+    const navMenu = document.querySelector('.nav-menu');
+    const searchContainer = document.querySelector('.search-container');
+
+    if (!nav || !navContainer || !burger || !navMenu) return;
+
+    if (burger.parentElement !== navContainer) {
+      navContainer.insertBefore(burger, logo?.nextSibling || navContainer.firstChild);
+    }
+
+    burger.type = 'button';
+    burger.setAttribute('aria-controls', 'primaryNavigation');
+    burger.setAttribute('aria-expanded', burger.classList.contains('active') ? 'true' : 'false');
+    navMenu.id = 'primaryNavigation';
+    navMenu.setAttribute('aria-label', 'Основное меню');
+
+    searchContainer?.querySelector('input')?.setAttribute('enterkeyhint', 'search');
+
+    const syncMenuState = () => {
+      const isOpen = navMenu.classList.contains('active');
+      burger.setAttribute('aria-expanded', String(isOpen));
+      document.documentElement.classList.toggle('has-open-menu', isOpen);
+    };
+
+    burger.addEventListener('click', () => requestAnimationFrame(syncMenuState));
+    navMenu.addEventListener('click', (event) => {
+      if (event.target.closest('a')) requestAnimationFrame(syncMenuState);
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key !== 'Escape' || !navMenu.classList.contains('active')) return;
+      burger.classList.remove('active');
+      navMenu.classList.remove('active');
+      document.body.classList.remove('menu-open');
+      syncMenuState();
+      burger.focus();
+    });
+  }
+
+  function hardenInteractiveCards() {
+    document.addEventListener('click', (event) => {
+      if (event.target.closest('.wishlist-btn, .compare-btn, .quick-view-btn')) {
+        event.preventDefault();
+      }
+    });
+  }
+
+  function addImageFallbacks() {
+    document.addEventListener('error', (event) => {
+      const image = event.target;
+      if (!(image instanceof HTMLImageElement) || image.dataset.fallbackApplied === 'true') return;
+      image.dataset.fallbackApplied = 'true';
+      image.src = 'favicon.svg';
+      image.alt = image.alt || 'ArtPhone';
+    }, true);
+  }
+
+  function upgradeSearch() {
+    const input = document.getElementById('searchInput');
+    const results = document.getElementById('searchResults');
+    if (!input || !results) return;
+
+    input.setAttribute('autocomplete', 'off');
+    input.setAttribute('role', 'combobox');
+    input.setAttribute('aria-autocomplete', 'list');
+    input.setAttribute('aria-expanded', results.classList.contains('active') ? 'true' : 'false');
+    results.setAttribute('role', 'listbox');
+
+    const observer = new MutationObserver(() => {
+      input.setAttribute('aria-expanded', results.classList.contains('active') ? 'true' : 'false');
+    });
+    observer.observe(results, { attributes: true, attributeFilter: ['class'] });
+
+    input.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        results.classList.remove('active');
+        input.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  function patchCartPrototype() {
+    if (!window.ShoppingCart && typeof ShoppingCart === 'undefined') return;
+    const CartCtor = window.ShoppingCart || ShoppingCart;
+    if (!CartCtor?.prototype || CartCtor.prototype.__seniorPatched) return;
+    CartCtor.prototype.__seniorPatched = true;
+
+    const originalAddItem = CartCtor.prototype.addItem;
+    CartCtor.prototype.addItem = function (product) {
+      return originalAddItem.call(this, normalizeProduct(product));
+    };
+
+    CartCtor.prototype.updateCartPreview = function () {
+      const preview = document.querySelector('.cart-preview');
+      if (!preview) return;
+
+      if (!this.items.length) {
+        preview.innerHTML = '<div class="premium-empty cart-preview-empty">Корзина пуста</div>';
+        return;
+      }
+
+      let total = 0;
+      preview.innerHTML = this.items.slice(0, 4).map((item) => {
+        const itemTotal = moneyToNumber(item.product_price) * Number(item.quantity || 1);
+        total += itemTotal;
+        return `
+          <div class="cart-item" data-id="${escapeHtml(item.product_id)}">
+            <img src="${escapeHtml(item.product_image)}" alt="${escapeHtml(item.product_name)}" loading="lazy">
+            <div class="cart-item-info">
+              <h4>${escapeHtml(item.product_name)}</h4>
+              <div class="cart-item-price">${escapeHtml(item.product_price)} × ${Number(item.quantity || 1)}</div>
+            </div>
+            <button class="cart-item-remove" type="button" data-cart-action="remove" data-product-id="${escapeHtml(item.product_id)}" aria-label="Удалить ${escapeHtml(item.product_name)}">×</button>
+          </div>`;
+      }).join('');
+
+      if (this.items.length > 4) {
+        preview.insertAdjacentHTML('beforeend', `<div class="cart-more">Еще ${this.items.length - 4} товар(а)</div>`);
+      }
+
+      preview.insertAdjacentHTML('beforeend', `
+        <div class="cart-total">Итого: ${formatMoney(total)}</div>
+        <button class="cart-checkout" type="button">Перейти в корзину</button>
+      `);
+    };
+
+    CartCtor.prototype.renderCartPage = async function () {
+      const cartItemsList = document.getElementById('cartItemsList');
+      const emptyCart = document.getElementById('emptyCart');
+      const cartContent = document.querySelector('.cart-content');
+      const cartTotalItems = document.getElementById('cartTotalItems');
+      const cartTotalSum = document.getElementById('cartTotalSum');
+      if (!cartItemsList) return;
+
+      if (!this.items.length) {
+        if (emptyCart) emptyCart.style.display = 'block';
+        if (cartContent) cartContent.style.display = 'none';
+        cartItemsList.innerHTML = '';
+        if (cartTotalItems) cartTotalItems.textContent = '0';
+        if (cartTotalSum) cartTotalSum.textContent = '0 ₽';
+        return;
+      }
+
+      if (emptyCart) emptyCart.style.display = 'none';
+      if (cartContent) cartContent.style.display = 'grid';
+
+      let totalItems = 0;
+      let totalSum = 0;
+      cartItemsList.innerHTML = this.items.map((item) => {
+        const quantity = Number(item.quantity || 1);
+        const itemTotal = moneyToNumber(item.product_price) * quantity;
+        totalItems += quantity;
+        totalSum += itemTotal;
+
+        return `
+          <div class="cart-item-row" data-id="${escapeHtml(item.product_id)}">
+            <div class="cart-item-product">
+              <img src="${escapeHtml(item.product_image)}" alt="${escapeHtml(item.product_name)}" loading="lazy">
+              <h4>${escapeHtml(item.product_name)}</h4>
+            </div>
+            <div class="cart-item-price">${escapeHtml(item.product_price)}</div>
+            <div class="cart-item-quantity" aria-label="Количество товара">
+              <button class="quantity-btn" type="button" data-cart-action="decrement" data-product-id="${escapeHtml(item.product_id)}" aria-label="Уменьшить количество">−</button>
+              <span class="quantity-value">${quantity}</span>
+              <button class="quantity-btn" type="button" data-cart-action="increment" data-product-id="${escapeHtml(item.product_id)}" aria-label="Увеличить количество">+</button>
+            </div>
+            <div class="cart-item-total">${formatMoney(itemTotal)}</div>
+            <button class="cart-item-remove-btn" type="button" data-cart-action="remove" data-product-id="${escapeHtml(item.product_id)}" aria-label="Удалить ${escapeHtml(item.product_name)}">×</button>
+          </div>`;
+      }).join('');
+
+      if (cartTotalItems) cartTotalItems.textContent = String(totalItems);
+      if (cartTotalSum) cartTotalSum.textContent = formatMoney(totalSum);
+    };
+
+    const originalBindEvents = CartCtor.prototype.bindEvents;
+    CartCtor.prototype.bindEvents = function () {
+      originalBindEvents.call(this);
+      if (document.body.dataset.cartActionsDelegated === 'true') return;
+      document.body.dataset.cartActionsDelegated = 'true';
+
+      document.addEventListener('click', (event) => {
+        const actionButton = event.target.closest('[data-cart-action]');
+        if (!actionButton) return;
+        event.preventDefault();
+        const productId = actionButton.dataset.productId;
+        if (!productId) return;
+
+        if (actionButton.dataset.cartAction === 'remove') this.removeItem(productId);
+        if (actionButton.dataset.cartAction === 'decrement') this.updateQuantity(productId, -1);
+        if (actionButton.dataset.cartAction === 'increment') this.updateQuantity(productId, 1);
+      });
+
+      document.addEventListener('click', (event) => {
+        const checkoutButton = event.target.closest('.cart-checkout');
+        if (!checkoutButton) return;
+        event.preventDefault();
+        window.location.href = 'cart.html';
+      });
+    };
+  }
+
+  function enhanceFormsForMobile() {
+    document.querySelectorAll('input, textarea, select').forEach((field) => {
+      if (!field.getAttribute('autocomplete') && field.type !== 'search') {
+        field.setAttribute('autocomplete', 'on');
+      }
+    });
+  }
+
+  patchCartPrototype();
+  hardenInteractiveCards();
+  addImageFallbacks();
+
+  document.addEventListener('DOMContentLoaded', () => {
+    normalizeHeader();
+    upgradeSearch();
+    enhanceFormsForMobile();
+  });
+}());
