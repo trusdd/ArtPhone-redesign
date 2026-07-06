@@ -1463,10 +1463,13 @@ class ShoppingCart {
     const cartIcon = document.createElement('div');
     cartIcon.className = 'cart-icon';
     cartIcon.innerHTML = `
-            <button class="cart-btn">
-                🛒 <span class="cart-count">0</span>
+            <button class="cart-btn" type="button" aria-label="Открыть корзину">
+                <svg class="cart-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M7 18.25a1.75 1.75 0 1 0 0 3.5 1.75 1.75 0 0 0 0-3.5Zm10 0a1.75 1.75 0 1 0 0 3.5 1.75 1.75 0 0 0 0-3.5ZM5.24 5l.42 2H20a1 1 0 0 1 .97 1.24l-1.35 5.4A3 3 0 0 1 16.7 16H8.1a3 3 0 0 1-2.94-2.4L3.82 7.05 3.4 5H2a1 1 0 1 1 0-2h2.22a1 1 0 0 1 .98.8L5.24 5Zm.82 4 .86 4.2a1 1 0 0 0 .98.8h8.8a1 1 0 0 0 .97-.76L18.73 9H6.06Z" fill="currentColor"/>
+                </svg>
+                <span class="cart-count" aria-live="polite">0</span>
             </button>
-            <div class="cart-preview"></div>
+            <div class="cart-preview" aria-label="Мини-корзина"></div>
         `;
 
     const cartBtn = cartIcon.querySelector('.cart-btn');
@@ -1475,7 +1478,8 @@ class ShoppingCart {
       window.location.href = 'cart.html';
     });
 
-    navContainer.appendChild(cartIcon);
+    const burgerMenu = navContainer.querySelector('.burger-menu');
+    navContainer.insertBefore(cartIcon, burgerMenu || null);
     this.updateCartPreview();
   }
 

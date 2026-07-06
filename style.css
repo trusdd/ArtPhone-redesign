@@ -9325,3 +9325,105 @@ table {
     max-width: 12ch !important;
   }
 }
+
+/* Release hotfix v3: stable cart placement next to the mobile navigation button. */
+.nav-container .logo { order: 1; }
+.nav-container .nav-menu { order: 2; }
+.nav-container .search-container { order: 3; }
+.nav-container .cart-icon { order: 4; }
+.nav-container .burger-menu { order: 5; }
+
+.cart-btn__icon {
+  display: block;
+  width: 22px;
+  height: 22px;
+  pointer-events: none;
+}
+
+.cart-btn {
+  gap: 0;
+}
+
+@media (max-width: 900px) {
+  .nav-container {
+    grid-template-columns: minmax(0, 1fr) auto auto !important;
+    grid-template-areas:
+      "logo cart burger"
+      "search search search" !important;
+  }
+
+  .nav-container .logo {
+    grid-area: logo !important;
+  }
+
+  .nav-container .cart-icon {
+    grid-area: cart !important;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    margin: 0 !important;
+    position: relative;
+    z-index: 120;
+  }
+
+  .nav-container .burger-menu {
+    grid-area: burger !important;
+  }
+
+  .nav-container .search-container {
+    grid-area: search !important;
+  }
+
+  .cart-btn {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 42px !important;
+    height: 42px !important;
+    min-width: 42px;
+    min-height: 42px;
+    padding: 0 !important;
+    border: 1px solid rgba(230, 233, 239, 0.96) !important;
+    border-radius: 999px !important;
+    background: #fff !important;
+    color: var(--color-text) !important;
+    box-shadow: none;
+  }
+
+  .cart-btn__icon {
+    width: 21px;
+    height: 21px;
+  }
+
+  .cart-count {
+    top: -3px !important;
+    right: -4px !important;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #fff;
+    font-size: 10px !important;
+    line-height: 1;
+  }
+
+  .nav-menu {
+    top: 124px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .nav-container {
+    gap: 8px !important;
+  }
+
+  .cart-btn,
+  .burger-menu {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px;
+    min-height: 40px;
+  }
+}

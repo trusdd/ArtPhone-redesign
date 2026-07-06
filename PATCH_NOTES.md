@@ -40,3 +40,12 @@ Release checks performed:
 - `node --check script.js` — passed.
 - CSS brace balance / hotfix assertions — passed.
 - Local HTML link and image scan across 47 pages — passed, 0 missing local assets.
+
+
+## v3 cart placement hotfix
+
+- Переместил иконку корзины в верхнюю панель рядом с burger-навигацией на мобильных устройствах.
+- Теперь корзина создаётся перед `.burger-menu`, а не докидывается в конец `.nav-container`, поэтому порядок в header стабильный.
+- Добавил финальные CSS-override правила для мобильной сетки header: `logo | cart | burger`, поиск остаётся второй строкой.
+- Заменил emoji-иконку корзины на inline SVG, чтобы она выглядела аккуратнее и одинаково на iOS/Android/desktop.
+- Добавил `aria-label` и `aria-live` для корректной доступности корзины.
