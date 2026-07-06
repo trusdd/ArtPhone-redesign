@@ -9118,3 +9118,210 @@ table {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* --------------------------------------------------------------------------
+   Release hotfix: mobile header/menu visibility + homepage hero readability.
+   The previous mobile pass made the header float over the hero and could leave
+   the burger hidden around tablet/mobile breakpoints. These overrides keep the
+   header in normal flow and make the menu deterministic before release.
+   -------------------------------------------------------------------------- */
+@media (max-width: 900px) {
+  :root {
+    --header-height: 116px;
+  }
+
+  .header {
+    position: sticky !important;
+    top: 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    border-right: 0 !important;
+    border-left: 0 !important;
+    border-radius: 0 !important;
+    z-index: 1000 !important;
+  }
+
+  .main-nav {
+    position: relative !important;
+    width: 100% !important;
+  }
+
+  .nav-container {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto auto !important;
+    grid-template-rows: auto auto !important;
+    grid-template-areas:
+      "logo cart burger"
+      "search search search" !important;
+    align-items: center !important;
+    gap: 10px !important;
+    min-height: var(--header-height) !important;
+    padding: 10px var(--mobile-gutter) !important;
+  }
+
+  .logo {
+    grid-area: logo !important;
+    min-width: 0 !important;
+    color: var(--color-text) !important;
+  }
+
+  .cart-icon {
+    grid-area: cart !important;
+    grid-column: auto !important;
+    grid-row: auto !important;
+    margin: 0 !important;
+    z-index: 1002 !important;
+  }
+
+  .burger-menu,
+  .main-nav > .burger-menu {
+    position: relative !important;
+    inset: auto !important;
+    grid-area: burger !important;
+    display: inline-flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 5px !important;
+    margin: 0 !important;
+    padding: 11px !important;
+    border: 1px solid rgba(230, 233, 239, 0.96) !important;
+    border-radius: var(--radius-pill) !important;
+    background: #fff !important;
+    z-index: 1002 !important;
+  }
+
+  .burger-menu span {
+    display: block !important;
+    width: 22px !important;
+    height: 2px !important;
+    background: var(--color-text) !important;
+  }
+
+  .search-container {
+    grid-area: search !important;
+    grid-column: 1 / -1 !important;
+    grid-row: auto !important;
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0 !important;
+  }
+
+  .nav-menu {
+    position: fixed !important;
+    top: calc(var(--header-height) + env(safe-area-inset-top, 0px) + 8px) !important;
+    right: var(--mobile-gutter) !important;
+    left: var(--mobile-gutter) !important;
+    display: flex !important;
+    width: auto !important;
+    height: auto !important;
+    max-height: calc(100dvh - var(--header-height) - 18px) !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+    padding: 12px !important;
+    border: 1px solid rgba(230, 233, 239, 0.92) !important;
+    border-radius: 22px !important;
+    background: rgba(255, 255, 255, 0.98) !important;
+    box-shadow: var(--shadow-lift) !important;
+    overflow-y: auto !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transform: translateY(-8px) scale(0.98) !important;
+    transition: opacity var(--transition), transform var(--transition), visibility var(--transition) !important;
+    z-index: 1001 !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+  }
+
+  .nav-menu.active {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    transform: translateY(0) scale(1) !important;
+  }
+
+  .nav-menu li {
+    width: 100% !important;
+    opacity: 1 !important;
+    animation: none !important;
+    text-align: left !important;
+  }
+
+  .nav-menu a {
+    display: flex !important;
+    width: 100% !important;
+    min-height: 48px !important;
+    align-items: center !important;
+    padding: 12px 14px !important;
+    border: 0 !important;
+    border-radius: 14px !important;
+    color: var(--color-text) !important;
+    background: transparent !important;
+    font-size: 16px !important;
+    text-align: left !important;
+  }
+
+  .nav-menu a:hover,
+  .nav-menu a.active {
+    background: #f1f4f8 !important;
+  }
+
+  .premium-hero {
+    min-height: auto !important;
+    margin-top: 0 !important;
+    padding: clamp(30px, 8vw, 54px) 0 clamp(42px, 10vw, 70px) !important;
+    overflow: visible !important;
+  }
+
+  .premium-hero .hero-content,
+  .premium-hero .eyebrow,
+  .premium-hero h1,
+  .premium-hero p,
+  .hero-actions,
+  .hero-metrics {
+    position: relative !important;
+    z-index: 1 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  .premium-hero .eyebrow {
+    margin-top: 0 !important;
+    color: var(--color-accent) !important;
+  }
+
+  .hero-shell {
+    padding-top: 0 !important;
+  }
+}
+
+@media (max-width: 520px) {
+  :root {
+    --header-height: 116px;
+  }
+
+  .nav-container {
+    grid-template-columns: minmax(0, 1fr) auto auto !important;
+    grid-template-areas:
+      "logo cart burger"
+      "search search search" !important;
+  }
+
+  .nav-menu {
+    top: calc(var(--header-height) + env(safe-area-inset-top, 0px) + 8px) !important;
+    left: 10px !important;
+    right: 10px !important;
+    max-height: calc(100dvh - var(--header-height) - 18px) !important;
+  }
+
+  .premium-hero h1 {
+    max-width: 12ch !important;
+  }
+}
