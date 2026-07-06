@@ -22,3 +22,21 @@
 
 - `node --check script.js` — успешно.
 - Проверены локальные ссылки и изображения в HTML — битых локальных ссылок/картинок не найдено.
+
+## Hotfix 2026-07-06 — mobile release blockers
+
+Fixed two release-blocking mobile regressions reported after QA:
+
+- Restored the mobile navigation menu at all mobile/tablet widths up to 900px.
+  - The burger button is now forcibly visible and touch-friendly across 390px, 430px, 768px and tablet breakpoints.
+  - The dropdown menu now uses deterministic `visibility`, `opacity`, `pointer-events`, `z-index` and fixed positioning.
+  - Menu links remain readable on the white premium mobile header.
+- Fixed hidden top text on the homepage hero.
+  - Removed the mobile negative hero overlap with the sticky header.
+  - Kept the hero eyebrow/title/description above visual layers and fully visible.
+
+Release checks performed:
+
+- `node --check script.js` — passed.
+- CSS brace balance / hotfix assertions — passed.
+- Local HTML link and image scan across 47 pages — passed, 0 missing local assets.
