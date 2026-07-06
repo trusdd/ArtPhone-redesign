@@ -2207,6 +2207,40 @@ document.head.appendChild(style);
     });
   }
 
+  function removeCartTextArtifacts(root = document) {
+    const cartRoots = root.querySelectorAll
+      ? root.querySelectorAll('.cart-icon, .cart-btn')
+      : [];
+
+    cartRoots.forEach((cartRoot) => {
+      cartRoot.querySelectorAll?.('.cart-label, [data-cart-label], .bag-label').forEach((label) => label.remove());
+
+      Array.from(cartRoot.childNodes).forEach((node) => {
+        if (node.nodeType === Node.TEXT_NODE && /bag/i.test(node.textContent || '')) {
+          node.remove();
+        }
+      });
+    });
+  }
+
+  function observeCartTextArtifacts() {
+    removeCartTextArtifacts();
+
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
+          if (node.nodeType !== Node.ELEMENT_NODE) return;
+          if (node.matches?.('.cart-icon, .cart-btn') || node.querySelector?.('.cart-icon, .cart-btn')) {
+            removeCartTextArtifacts(node);
+          }
+        });
+      });
+      removeCartTextArtifacts();
+    });
+
+    observer.observe(document.documentElement, { childList: true, subtree: true });
+  }
+
   patchCartPrototype();
   hardenInteractiveCards();
   addImageFallbacks();
@@ -2215,5 +2249,6 @@ document.head.appendChild(style);
     normalizeHeader();
     upgradeSearch();
     enhanceFormsForMobile();
+    observeCartTextArtifacts();
   });
 }());

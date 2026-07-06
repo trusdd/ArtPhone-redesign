@@ -49,3 +49,13 @@ Release checks performed:
 - Добавил финальные CSS-override правила для мобильной сетки header: `logo | cart | burger`, поиск остаётся второй строкой.
 - Заменил emoji-иконку корзины на inline SVG, чтобы она выглядела аккуратнее и одинаково на iOS/Android/desktop.
 - Добавил `aria-label` и `aria-live` для корректной доступности корзины.
+
+## v4 — Cart icon label cleanup
+- Removed the visible `Bag` pseudo-label from the header cart button.
+- Kept only the cart SVG icon and the item counter badge.
+- Added a CSS guard so cart button pseudo-elements cannot render text labels again.
+
+
+### v5 hotfix
+- Removed the visible `Bag` label at the source level and added a defensive DOM cleanup for legacy/cached cart label nodes.
+- Hardened cart CSS so the header cart renders only the trolley SVG icon and the quantity badge.

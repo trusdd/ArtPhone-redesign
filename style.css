@@ -5208,12 +5208,6 @@ img {
   font-size: 0;
 }
 
-.cart-btn::before {
-  content: 'Bag';
-  font-size: 12px;
-  font-weight: 750;
-}
-
 .cart-count {
   top: -6px;
   right: -6px;
@@ -9344,6 +9338,11 @@ table {
   gap: 0;
 }
 
+.cart-btn::before,
+.cart-btn::after {
+  content: none !important;
+}
+
 @media (max-width: 900px) {
   .nav-container {
     grid-template-columns: minmax(0, 1fr) auto auto !important;
@@ -9426,4 +9425,36 @@ table {
     min-width: 40px;
     min-height: 40px;
   }
+}
+
+/* Release hotfix v5: remove any visible cart text label; keep only trolley icon + count. */
+.cart-icon .cart-label,
+.cart-icon [data-cart-label],
+.cart-icon .bag-label,
+.cart-btn .cart-label,
+.cart-btn [data-cart-label],
+.cart-btn .bag-label {
+  display: none !important;
+}
+
+.cart-btn {
+  font-size: 0 !important;
+  line-height: 0 !important;
+  text-indent: 0 !important;
+  overflow: visible;
+}
+
+.cart-btn > svg,
+.cart-btn > .cart-btn__icon,
+.cart-btn > .cart-count {
+  font-size: initial !important;
+  line-height: 1 !important;
+}
+
+.cart-btn::before,
+.cart-btn::after,
+.cart-icon::before,
+.cart-icon::after {
+  content: '' !important;
+  display: none !important;
 }
